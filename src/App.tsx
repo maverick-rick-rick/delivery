@@ -1,24 +1,19 @@
 import React from 'react';
-import logo from './logo.svg';
+import { useSelector } from 'react-redux';
 import './App.css';
+import { FormCU } from './components/form/FormCU';
+import { Table } from './components/table/Table';
+import { IPizzaStateType } from './store/types/pizzaTypes';
 
 function App() {
+  const pizzaList:IPizzaStateType[] = useSelector((state:any)=>state.pizzaList)
+
+
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <Table tableContent={pizzaList} tableType={'pizzaList'} />
+      <FormCU/>
     </div>
   );
 }
