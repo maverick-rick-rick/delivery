@@ -7,7 +7,7 @@ const pizzaState: IPizzaStateType[] = [
 		title: "Hawaian",
 		description: "Lorem ipsum dolor sit amet consectetur, adipisicing elit. Ut amet tempora maxime?",
 		imgPath: "dolor",
-		ingridients: [
+		ingredients: [
 			{
 				value: "ham",
 				allergic: false,
@@ -27,7 +27,7 @@ const pizzaState: IPizzaStateType[] = [
 		title: "Margarita",
 		description: "Lorem ipsum dolor sit amet consectetur, adipisicing elit. Ut amet tempora maxime?",
 		imgPath: "dolor",
-		ingridients: [
+		ingredients: [
 			{
 				value: "ham",
 				allergic: false,
@@ -47,7 +47,7 @@ const pizzaState: IPizzaStateType[] = [
 		title: "Carbonara",
 		description: "Lorem ipsum dolor sit amet consectetur, adipisicing elit. Ut amet tempora maxime?",
 		imgPath: "dolor",
-		ingridients: [
+		ingredients: [
 			{
 				value: "ham",
 				allergic: false,

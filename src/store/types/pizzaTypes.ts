@@ -1,4 +1,4 @@
-export type ingridientType = {
+export type ingredientType = {
 	value: string;
 	allergic: boolean;
 };
@@ -8,5 +8,5 @@ export interface IPizzaStateType {
 	title: string;
 	description: string;
 	imgPath: string;
-	ingridients: ingridientType[];
+	ingredients: ingredientType[];
 }

@@ -25,7 +25,7 @@ export const TableRowForPizzaList = (props: TableRowProps) => {
 		<Button key={keyGenerator()} innerText={"Delete"} />,
 	];
 
-	const ingridientsArray = rowContent.ingridients.map((element) => {
+	const ingredientsArray = rowContent.ingredients.map((element) => {
 		return (
 			<div key={rowContent.id + element.value}>
 				{element.value}
@@ -38,7 +38,7 @@ export const TableRowForPizzaList = (props: TableRowProps) => {
 		<div className={"table_row"} key={rowContent.id}>
 			<TableRowItem children={rowContent.title} />
 			<TableRowItem children={rowContent.description} />
-			<TableRowItem children={ingridientsArray} />
+			<TableRowItem children={ingredientsArray} />
 			<TableRowItem children={tableButtons} />
 		</div>
 	);

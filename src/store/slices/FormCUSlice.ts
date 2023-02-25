@@ -1,6 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { keyGenerator } from "../../utilities/keygen";
-import { IPizzaStateType, ingridientType } from "../types/pizzaTypes";
+import { IPizzaStateType, ingredientType } from "../types/pizzaTypes";
 
 
 const emptyFormState : IPizzaStateType = {
@@ -9,7 +9,7 @@ const emptyFormState : IPizzaStateType = {
 	title: "",
 	description: "",
 	imgPath: "",
-	ingridients: [
+	ingredients: [
 		{
 			value: "Pizza base",
 			allergic: false,
@@ -36,15 +36,15 @@ export const FormCUSlice = createSlice({
 			emptyFormState.id = keyGenerator();
 			return {...state, ...emptyFormState}
 		},
-		addNewInrgidient: (state, action) => {
-			return {...state, ingridients: action.payload}
+		addNewIngredient: (state, action) => {
+			return {...state, ingredients: action.payload}
 		},
-		updateIngridient: (state, action) => {
-			return {...state, ingridients: [...[], action.payload]}
+		updateIngredient: (state, action) => {
+			return {...state, ingredients: [...[], action.payload]}
 		}
 
 	},
 });
 
-export const { updateFromInput, clearFormState, addNewInrgidient, updateIngridient } = FormCUSlice.actions;
+export const { updateFromInput, clearFormState, addNewIngredient, updateIngredient } = FormCUSlice.actions;
 export default FormCUSlice.reducer;
