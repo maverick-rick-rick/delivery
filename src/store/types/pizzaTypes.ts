@@ -1,3 +1,4 @@
+
 export type ingredientType = {
 	value: string;
 	allergic: boolean;
@@ -10,3 +11,13 @@ export interface IPizzaStateType {
 	imgPath: string;
 	ingredients: ingredientType[];
 }
+
+export type IngredientType = {
+	value: string;
+	allergic: boolean;
+};
+
+export type BufferIngredientType = {
+	payload: IngredientType,
+	index: number | null
+};

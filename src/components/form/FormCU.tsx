@@ -1,43 +1,88 @@
-import React, { FormEvent } from 'react'
-import { useDispatch, useSelector } from 'react-redux';
-import { addNewIngredient, clearFormState, updateFromInput } from '../../store/slices/FormCUSlice';
-import { createNewItem } from '../../store/slices/pizzaSlice';
-import { IPizzaStateType } from '../../store/types/pizzaTypes';
-import { keyGenerator } from '../../utilities/keygen';
-import { Button } from '../controls/Button';
+import React, { FormEvent, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import {
+	addNewIngredient,
+	clearFormState,
+	bufferizeIngredient,
+	removeIngredient,
+	updateFromInput,
+	updateIngredientForm,
+	editIngredient,
+} from "../../store/slices/FormControlSlice";
+import { createNewItem } from "../../store/slices/pizzaSlice";
+import { IPizzaStateType } from "../../store/types/pizzaTypes";
+import { keyGenerator } from "../../utilities/keygen";
+import { Button } from "../controls/Button";
 
 type FormCUProps = {
-	updateRequest?: boolean,
-	objectId?: number
-}
-
+	updateRequest?: boolean;
+	objectId?: number;
+};
 
 export const FormCU = (props: FormCUProps) => {
+	const { updateRequest, objectId } = props;
+	const formState: any = useSelector((state: any) => state.formState);
+	const state: IPizzaStateType = formState.formState;
 
-	const {updateRequest, objectId} = props;
-	const state:IPizzaStateType = useSelector((state:any) => state.formState);
 	const dispatch = useDispatch();
 
-	function formSubmit(e:FormEvent<HTMLFormElement | HTMLInputElement>) {
+	const [saveButtonRole, setSaveButtonRole] = useState("default");
+	const [disabledElement, setDisabledElement] = useState(NaN);
+
+	function formSubmit(e: FormEvent<HTMLFormElement | HTMLInputElement>) {
 		e.preventDefault();
 		dispatch(createNewItem(state));
 		dispatch(clearFormState());
 	}
 
-	// function addNewIngredient(e:React.MouseEvent<HTMLButtonElement, MouseEvent>){
-	// 	e.preventDefault();
-	// 	e.stopPropagation();
-	// 	const target = e.target as HTMLButtonElement;
-	// 	const x = target.closest('.form_add_ingr');
-	// 	const result = {
-	// 		value: '',
-	// 		allergic: false
-	// 	}
-	// 	addNewIngredient(result);
-		
-	// }
+	function pushNewIngredient(
+		e: React.MouseEvent<HTMLButtonElement, MouseEvent>
+	) {
+		e.preventDefault();
+		e.stopPropagation();
 
-	const lastIngredientEntity = state.ingredients[state.ingredients.length - 1];
+		const button = e.target as HTMLButtonElement;
+		const submitDataset = {
+			role: button.dataset.role as String,
+		};
+		if (submitDataset.role === undefined) {
+			submitDataset.role = "default";
+		}
+		(() => {
+			switch (submitDataset.role) {
+				case "default":
+				default:
+					dispatch(addNewIngredient());
+					break;
+				case "edit":
+					dispatch(editIngredient());
+					setSaveButtonRole("default");
+					setDisabledElement(NaN);
+					break;
+			}
+		})();
+	}
+
+	function removeCurrentIngredient(
+		e: React.MouseEvent<HTMLButtonElement, MouseEvent>,
+		index: number
+	) {
+		e.preventDefault();
+		e.stopPropagation();
+
+		dispatch(removeIngredient(index));
+	}
+	function editCurrentIngredient(
+		e: React.MouseEvent<HTMLButtonElement, MouseEvent>,
+		index: number
+	) {
+		e.preventDefault();
+		e.stopPropagation();
+
+		dispatch(bufferizeIngredient(index));
+		setSaveButtonRole("edit");
+		setDisabledElement(index);
+	}
 
 	return (
 		<div className="form_wrapper">
@@ -87,48 +132,86 @@ export const FormCU = (props: FormCUProps) => {
 				</div>
 				<div className={"form_item"}>
 					<div className={"form_add_ingr"}>
-						<label htmlFor="form_cu_new_ingr">Add ingredient</label>
+						<label htmlFor="form_cu_new_ingr">
+							Add ingredient:
+						</label>
 						<input
 							type="text"
 							name=""
 							id="form_cu_new_ingr"
-							value={lastIngredientEntity.value}
+							value={formState.bufferIngredient.payload.value}
+							onChange={(e) =>
+								dispatch(
+									updateIngredientForm({
+										value: e.target.value,
+									})
+								)
+							}
 						/>
 						<label htmlFor="form_cu_allergen">is allergen?</label>
 						<input
 							type="checkbox"
 							name=""
 							id="form_cu_allergen"
-							checked={lastIngredientEntity.allergic}
+							checked={
+								formState.bufferIngredient.payload.allergic
+							}
+							onChange={(e) =>
+								dispatch(
+									updateIngredientForm({
+										allergic: e.target.checked,
+									})
+								)
+							}
 						/>
 						<Button
-							innerText={"Add"}
-							onClick={(e) => {
-								addNewIngredient(e);
-							}}
+							innerText={"Save"}
+							data-role={saveButtonRole}
+							onClick={(e) => pushNewIngredient(e)}
 						/>
 					</div>
 					<ul className={"form_ingr_list"}>
-						{state.ingredients.map((element) => {
-							return element.value.length === 0 ? (
-								false
-							) : (
-								<li
-									className={"form_ingr_list_item"}
-									key={keyGenerator()}
-								>
-									<p>
-										{element.value}{" "}
-										<span>
-											{element.allergic === true
-												? "X"
-												: false}
-										</span>
-									</p>
-									<Button innerText={"delete"} />
-								</li>
-							);
-						})}
+						{state.ingredients.length < 1 ? (
+							<p>
+								There is no ingredients, please, add at least
+								one of them
+							</p>
+						) : (
+							state.ingredients.map((element, index) => {
+								return element.value.length === 0 ? (
+									false
+								) : (
+									<li
+										className={`form_ingr_list_item ${disabledElement === index ? 'disabled' : ''}`}
+										key={keyGenerator()}
+									>
+										<p>
+											{element.value + " "}
+											<span>
+												{element.allergic === true
+													? "X"
+													: false}
+											</span>
+										</p>
+										<Button
+											innerText={"edit"}
+											onClick={(e) =>
+												editCurrentIngredient(e, index)
+											}
+										/>
+										<Button
+											innerText={"delete"}
+											onClick={(e) =>
+												removeCurrentIngredient(
+													e,
+													index
+												)
+											}
+										/>
+									</li>
+								);
+							})
+						)}
 					</ul>
 					<input
 						type="submit"
@@ -139,5 +222,4 @@ export const FormCU = (props: FormCUProps) => {
 			</form>
 		</div>
 	);
-
-}
+};

@@ -1,5 +1,5 @@
 import { configureStore } from '@reduxjs/toolkit'
-import FormCUSlice from './slices/FormCUSlice';
+import FormCUSlice from './slices/FormControlSlice';
 import pizzaSlice from './slices/pizzaSlice';
 
 
