@@ -9,7 +9,7 @@ import {
 	updateIngredientForm,
 	editIngredient,
 } from "../../store/slices/FormControlSlice";
-import { createNewItem } from "../../store/slices/pizzaSlice";
+import { createNewItem, updateItem } from "../../store/slices/pizzaSlice";
 import { IPizzaStateType } from "../../store/types/pizzaTypes";
 import { keyGenerator } from "../../utilities/keygen";
 import { Button } from "../controls/Button";
@@ -31,7 +31,14 @@ export const FormCU = (props: FormCUProps) => {
 
 	function formSubmit(e: FormEvent<HTMLFormElement | HTMLInputElement>) {
 		e.preventDefault();
-		dispatch(createNewItem(state));
+		switch (formState.formRole.role) {
+			case "update": 
+				dispatch(updateItem(state));
+				break;
+			case "create":
+			default:
+				dispatch(createNewItem(state));
+		}
 		dispatch(clearFormState());
 	}
 
@@ -62,7 +69,6 @@ export const FormCU = (props: FormCUProps) => {
 			}
 		})();
 	}
-
 	function removeCurrentIngredient(
 		e: React.MouseEvent<HTMLButtonElement, MouseEvent>,
 		index: number

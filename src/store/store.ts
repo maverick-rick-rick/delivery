@@ -4,9 +4,10 @@ import pizzaSlice from './slices/pizzaSlice';
 
 
 
+
 export  const store = configureStore({
 	reducer: {
-		pizzaList : pizzaSlice,
-		formState : FormCUSlice
-	}
+		pizzaList: pizzaSlice,
+		formState: FormCUSlice,
+	},
 });

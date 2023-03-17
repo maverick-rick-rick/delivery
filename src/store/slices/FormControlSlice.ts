@@ -29,8 +29,12 @@ const bufferIngredient: BufferIngredientType = {
 	index: null
 };
 
+const formRole = {
+	role: "create"
+};
+
 const initialState = {
-	formState, bufferIngredient
+	formState, bufferIngredient, formRole
 };
 
 
@@ -48,6 +52,10 @@ export const FormControlSlice = createSlice({
 				...action.payload,
 			};
 			return state;
+		},
+		setFormStateToEdit: (state, action) => {
+			state.formState = action.payload;
+			state.formRole = {role : "update"};
 		},
 		clearFormState: (state) => {
 			emptyPizzaEntity.id = keyGenerator();
@@ -99,6 +107,15 @@ export const FormControlSlice = createSlice({
 });
 
 
-export const { updateFromInput, clearFormState, addNewIngredient, updateIngredientForm, removeIngredient, bufferizeIngredient, editIngredient } = FormControlSlice.actions;
+export const {
+	updateFromInput,
+	clearFormState,
+	addNewIngredient,
+	updateIngredientForm,
+	removeIngredient,
+	bufferizeIngredient,
+	editIngredient,
+	setFormStateToEdit,
+} = FormControlSlice.actions;
 export default FormControlSlice.reducer;
 

@@ -33,44 +33,6 @@ code {
 }
 
 
-
-.table {
-	display: flex;
-	flex-direction: column;
-	width: 100%;
-	border: 3px solid grey;
-	margin-bottom: 50px;
-}
-
-.table_row {
-	margin: 10px 5px;
-	display: flex;
-	flex-direction: row;
-	gap: 15px;
-	border: 1px dashed green;
-	justify-content: space-around;
-}
-
-.table_row__item {
-	border: 1px solid tomato;
-	flex: 1 1 auto;
-}
-
-.table_row__empty {
-	display: flex;
-	align-items: center;
-	justify-content: center;
-	font-size: 3rem;
-	color: red;
-	text-transform: uppercase;
-	border: 2px dashed red;
-}
-
-.table_row__item span{
-	color: red;
-	font-weight: 900;
-}
-
 .form_wrapper{
 	display: flex;
 	flex-direction: column;

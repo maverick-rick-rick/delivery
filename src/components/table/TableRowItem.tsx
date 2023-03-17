@@ -1,14 +1,17 @@
 import React from 'react'
 
+import classes from "./../../style_modules/table/TableRow.module.css"
+
 type TableRowItemProps = {
 	children: React.ReactNode | string | undefined;
+	className?: string;
 }
 
 export const TableRowItem = (props: TableRowItemProps) => {
-	const { children } = props;
+	const { children, className } = props;
 	return (
-		<div className={'table_row__item'}>
-			{children}
+		<div className={`${classes.cell} ${className? className : ''}`}>
+			<div className={classes.cell_content}>{children}</div>
 		</div>
-	)
+	);
 }
