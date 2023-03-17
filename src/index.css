@@ -5,7 +5,6 @@ body {
 		sans-serif;
 	-webkit-font-smoothing: antialiased;
 	-moz-osx-font-smoothing: grayscale;
-	padding: 0 150px;
 }
 
 code {
@@ -20,6 +19,10 @@ code {
 	position: relative;
 }
 
+.hidden {
+	display: none !important;
+}
+
 .disabled::after {
 	content: "";
 	width: 100%;
@@ -30,6 +33,11 @@ code {
 	right: 0;
 	bottom: 0;
 	left: 0;
+}
+
+
+.App {
+	position: relative;
 }
 
 

@@ -1,0 +1,57 @@
+.wrapper{
+    width: 100vw;
+    height: 100vh;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    bottom: 0;
+    overflow: hidden;
+    background-color: rgba(0, 0, 0, 0.3);
+    backdrop-filter: blur(1.5px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.popup {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: -25vh;
+    min-width: 200px;
+    min-height: 200px;
+    background-color: #fff;
+    position: relative;
+    padding: 15px 60px 15px 15px;
+    -webkit-box-shadow: 0px 0px 2px 0px rgba(0,0,0,0.5);
+    -moz-box-shadow: 0px 0px 2px 0px rgba(0,0,0,5);
+    box-shadow: 0px 0px 2px 0px rgba(0,0,0,5);
+    box-sizing: border-box;
+}
+
+
+
+.close {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    width: 30px;
+    height: 30px;
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    
+}
+
+.close > svg {
+    width: 20px;
+    height: 20px;
+    transition: all 0.3s linear;
+    fill: #000;
+
+}
+.close:hover > svg {
+    transform: scale(1.2)
+
+}
