@@ -10,6 +10,7 @@ import {
 	editIngredient,
 } from "../../store/slices/FormControlSlice";
 import { createNewItem, updateItem } from "../../store/slices/pizzaSlice";
+import { popupToggle } from "../../store/slices/PopupSlice";
 import { IPizzaStateType } from "../../store/types/pizzaTypes";
 import { keyGenerator } from "../../utilities/keygen";
 import { Button } from "../controls/Button";
@@ -35,6 +36,7 @@ export const FormCU = () => {
 			default:
 				dispatch(createNewItem(state));
 		}
+		dispatch(popupToggle());
 		dispatch(clearFormState());
 	}
 

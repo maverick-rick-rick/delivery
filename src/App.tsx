@@ -1,6 +1,5 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import './App.css';
 import { Button } from './components/controls/Button';
 import PopupWithCUForm from './components/popup/PopupWithCUForm';
 import { Table } from './components/table/Table';
@@ -16,10 +15,10 @@ function App() {
 
 
   return (
-		<div className="App">
+		<div className="container">
 			<Table tableContent={pizzaList} tableType={"pizzaList"} />
 			<Button
-				className={'add_button_temp'}
+				className={'btn_regular'}
 				innerText={"Add item"}
 				onClick={() => dispatch(popupToggle())}
 			/>
