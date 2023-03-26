@@ -1,0 +1,184 @@
+.form_wrapper{
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	width: 100%;
+	margin: 0 auto;
+	padding: 15px;
+	
+}
+
+.header {
+	font-size: 16px;
+	text-transform: uppercase;
+	font-weight: 600;
+	color:#00ca1b;
+	text-decoration: underline 1px rgba(0,0,0, 0.15);
+	user-select: none;
+	margin-bottom: 25px;
+}
+
+.form_item {
+	display: flex;
+	text-align: left;
+	margin-bottom: 15px;
+	flex-direction: column-reverse;
+
+}
+.form_item.ingredients {
+	flex-direction: column;
+	border: 1px solid rgba(0,0,0, 0.15);
+	padding: 10px 5px;
+}
+
+.add_ingredient {
+	display: flex;
+	gap: 15px;
+	margin-bottom: 15px;
+	
+	
+
+}
+.add_ingredient > div{
+	display: flex;
+	flex-direction: column-reverse;
+	justify-content: center;
+
+	
+
+}
+
+.add_ingredient > button {
+	width: 50px;
+	height: 50px;
+	padding: 0;
+	background-color: transparent;
+	border: 1px solid rgba(0,0,0, 0.35);
+	border-radius: 5px;
+	outline: none !important;
+	cursor: pointer;
+	transition: all 0.25s ease;
+}
+
+.add_ingredient > button svg{
+	width: 100%;
+	height: 100%;
+	transition: all 0.25s ease;
+	fill:rgba(0,0,0, 0.25)
+}
+
+.add_ingredient > button:hover {
+	border-color: #00ca1b;
+}
+
+.add_ingredient > button:hover svg{
+	fill: #00ca1b;
+}
+
+.ingredient_list {
+	display: flex;
+	flex-direction: column;
+	border-top: 1px dashed rgba(0,0,0, 0.25);
+	margin-left: 0;
+	padding: 10px;
+	gap: 7px;
+}
+
+.ingredient_list_item {
+	display: flex;
+	flex-direction: row;
+	border: 1px solid rgba(0,0,0, 0.15);
+	border-radius: 15px;
+	padding: 5px 5px 5px 15px;
+	justify-content: space-between;
+	align-items: center;
+}
+
+.ingredient_list_item > p {
+	font-size: 14px;
+	color: rgba(0,0,0, 0.85);
+	display: flex;
+	align-items: center;
+	gap: 5px;
+}
+
+.ingredient_list_item span svg {
+	width: 15px;
+	height: 15px;
+	fill: none;
+	stroke: red;
+	margin-top: 2px;
+	cursor: pointer;
+}
+
+ .ingredient_list_item  > .buttons_wrapper{
+	display: flex;
+	flex-direction: row;
+	gap: 5px;
+	
+}
+
+.ingredient_list_item button {
+	background-color: transparent;
+	width: 35px;
+	height: 35px;
+	border-radius: 50%;
+	border: none;
+	outline: none;
+	display: flex;
+	align-items: center;
+	cursor: pointer;
+}
+
+.ingredient_list_item button > svg {
+	width: 25px;
+	height: 25px;
+	fill: rgba(0,0,0, 0.15);
+	stroke: rgba(0,0,0, 0.15);
+	transition: all 0.25s ease;
+
+}
+.ingredient_list_item button:hover > svg {
+	fill: rgba(0,0,0, 0.35);
+	stroke: rgba(0,0,0, 0.35);
+
+}
+
+
+label {
+	font-size: 14px;
+	margin-bottom: 7px;
+	color: rgba(0,0,0, 0.35)
+}
+textarea {
+	resize: none;
+}
+
+input[type='text'], textarea{
+	border: none;
+	outline: 1px solid rgba(0,0,0, 0.15);
+	padding: 5px;
+	color:rgba(0,0,0, 0.65)
+}
+
+input[type='text']:focus, textarea:focus{
+	outline: 1px solid rgba(0,0,0, 0.45);
+	color: rgba(0,0,0, 0.85)
+}
+
+input[type='text']:focus + label, textarea:focus + label {
+	color:rgba(0,0,0, 0.6);
+}
+
+
+.form_submit {
+	background-color: transparent;
+	text-transform: uppercase;
+	font-weight: 500;
+	color: #00ca1b;
+	font-size: 18px;
+	border: 1px solid #00ca1b;
+	border-radius: 25px;
+	padding: 15px 30px ;
+
+}

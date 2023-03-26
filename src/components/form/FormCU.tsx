@@ -13,26 +13,22 @@ import { createNewItem, updateItem } from "../../store/slices/pizzaSlice";
 import { IPizzaStateType } from "../../store/types/pizzaTypes";
 import { keyGenerator } from "../../utilities/keygen";
 import { Button } from "../controls/Button";
+import SVGIcon from "../controls/SVGIcon";
+import classes from "./../../style_modules/forms/FormCU.module.css";
 
-type FormCUProps = {
-	updateRequest?: boolean;
-	objectId?: number;
-};
-
-export const FormCU = (props: FormCUProps) => {
-	const { updateRequest, objectId } = props;
+export const FormCU = () => {
 	const formState: any = useSelector((state: any) => state.formState);
 	const state: IPizzaStateType = formState.formState;
 
 	const dispatch = useDispatch();
 
 	const [saveButtonRole, setSaveButtonRole] = useState("default");
-	const [disabledElement, setDisabledElement] = useState(NaN);
-
+	const disabledElement = useSelector((state:any) => state.formState.bufferIngredient.index);
+	
 	function formSubmit(e: FormEvent<HTMLFormElement | HTMLInputElement>) {
 		e.preventDefault();
 		switch (formState.formRole.role) {
-			case "update": 
+			case "update":
 				dispatch(updateItem(state));
 				break;
 			case "create":
@@ -42,29 +38,21 @@ export const FormCU = (props: FormCUProps) => {
 		dispatch(clearFormState());
 	}
 
-	function pushNewIngredient(
+	function pushIngredient(
 		e: React.MouseEvent<HTMLButtonElement, MouseEvent>
 	) {
 		e.preventDefault();
 		e.stopPropagation();
 
-		const button = e.target as HTMLButtonElement;
-		const submitDataset = {
-			role: button.dataset.role as String,
-		};
-		if (submitDataset.role === undefined) {
-			submitDataset.role = "default";
-		}
 		(() => {
-			switch (submitDataset.role) {
+			switch (saveButtonRole) {
+				case "edit":
+					setSaveButtonRole("default");
+					dispatch(editIngredient());
+					break;
 				case "default":
 				default:
 					dispatch(addNewIngredient());
-					break;
-				case "edit":
-					dispatch(editIngredient());
-					setSaveButtonRole("default");
-					setDisabledElement(NaN);
 					break;
 			}
 		})();
@@ -87,14 +75,13 @@ export const FormCU = (props: FormCUProps) => {
 
 		dispatch(bufferizeIngredient(index));
 		setSaveButtonRole("edit");
-		setDisabledElement(index);
 	}
 
 	return (
-		<div className="form_wrapper">
+		<div className={classes.form_wrapper}>
+			<p className={classes.header}>Create new item</p>
 			<form action="#" className="form" onSubmit={(e) => formSubmit(e)}>
-				<div className={"form_item"}>
-					<label htmlFor="form_cu_title">Pizza title</label>
+				<div className={classes.form_item}>
 					<input
 						type="text"
 						name=""
@@ -104,9 +91,9 @@ export const FormCU = (props: FormCUProps) => {
 							dispatch(updateFromInput({ title: e.target.value }))
 						}
 					/>
+					<label htmlFor="form_cu_title">Pizza title</label>
 				</div>
-				<div className={"form_item"}>
-					<label htmlFor="form_cu_desc">Pizza description</label>
+				<div className={classes.form_item}>
 					<textarea
 						name=""
 						id="form_cu_desc"
@@ -119,11 +106,9 @@ export const FormCU = (props: FormCUProps) => {
 							)
 						}
 					></textarea>
+					<label htmlFor="form_cu_desc">Pizza description</label>
 				</div>
-				<div className={"form_item"}>
-					<label htmlFor="form_cu_img">
-						Image path ( temporarily string)
-					</label>
+				<div className={classes.form_item}>
 					<input
 						type="text"
 						name=""
@@ -135,48 +120,56 @@ export const FormCU = (props: FormCUProps) => {
 							)
 						}
 					/>
+					<label htmlFor="form_cu_img">
+						Image path ( temporarily string)
+					</label>
 				</div>
-				<div className={"form_item"}>
-					<div className={"form_add_ingr"}>
-						<label htmlFor="form_cu_new_ingr">
-							Add ingredient:
-						</label>
-						<input
-							type="text"
-							name=""
-							id="form_cu_new_ingr"
-							value={formState.bufferIngredient.payload.value}
-							onChange={(e) =>
-								dispatch(
-									updateIngredientForm({
-										value: e.target.value,
-									})
-								)
-							}
-						/>
-						<label htmlFor="form_cu_allergen">is allergen?</label>
-						<input
-							type="checkbox"
-							name=""
-							id="form_cu_allergen"
-							checked={
-								formState.bufferIngredient.payload.allergic
-							}
-							onChange={(e) =>
-								dispatch(
-									updateIngredientForm({
-										allergic: e.target.checked,
-									})
-								)
-							}
-						/>
+				<div className={`${classes.form_item} ${classes.ingredients}`}>
+					<div className={classes.add_ingredient}>
+						<div>
+							<input
+								type="text"
+								name=""
+								id="form_cu_new_ingr"
+								value={formState.bufferIngredient.payload.value}
+								onChange={(e) =>
+									dispatch(
+										updateIngredientForm({
+											value: e.target.value,
+										})
+									)
+								}
+							/>
+							<label htmlFor="form_cu_new_ingr">
+								Add ingredient:
+							</label>
+						</div>
+						<div>
+							<input
+								type="checkbox"
+								name=""
+								id="form_cu_allergen"
+								checked={
+									formState.bufferIngredient.payload.allergic
+								}
+								onChange={(e) =>
+									dispatch(
+										updateIngredientForm({
+											allergic: e.target.checked,
+										})
+									)
+								}
+							/>
+							<label htmlFor="form_cu_allergen">
+								Is allergen?
+							</label>
+						</div>
 						<Button
-							innerText={"Save"}
-							data-role={saveButtonRole}
-							onClick={(e) => pushNewIngredient(e)}
+							icon={"save"}
+							onClick={(e) => pushIngredient(e)}
 						/>
 					</div>
-					<ul className={"form_ingr_list"}>
+					<ul className={classes.ingredient_list}>
 						{state.ingredients.length < 1 ? (
 							<p>
 								There is no ingredients, please, add at least
@@ -184,44 +177,63 @@ export const FormCU = (props: FormCUProps) => {
 							</p>
 						) : (
 							state.ingredients.map((element, index) => {
+
 								return element.value.length === 0 ? (
 									false
 								) : (
 									<li
-										className={`form_ingr_list_item ${disabledElement === index ? 'disabled' : ''}`}
+										className={`${
+											classes.ingredient_list_item
+										} ${
+											disabledElement !== null && disabledElement === index
+												? "disabled"
+												: ""
+										}`}
 										key={keyGenerator()}
 									>
 										<p>
 											{element.value + " "}
 											<span>
-												{element.allergic === true
-													? "X"
-													: false}
+												{element.allergic === true ? (
+													<SVGIcon icon={"danger"} />
+												) : (
+													false
+												)}
 											</span>
 										</p>
-										<Button
-											innerText={"edit"}
-											onClick={(e) =>
-												editCurrentIngredient(e, index)
-											}
-										/>
-										<Button
-											innerText={"delete"}
-											onClick={(e) =>
-												removeCurrentIngredient(
-													e,
-													index
-												)
-											}
-										/>
+										<div
+											className={classes.buttons_wrapper}
+										>
+											<Button
+												icon={"pencil"}
+												onClick={(e) =>
+													editCurrentIngredient(
+														e,
+														index
+													)
+												}
+											/>
+											<Button
+												icon={"delete"}
+												onClick={(e) =>
+													removeCurrentIngredient(
+														e,
+														index
+													)
+												}
+											/>
+										</div>
 									</li>
 								);
 							})
 						)}
 					</ul>
+				</div>
+				<div className="form_item">
 					<input
 						type="submit"
 						value="Proceed"
+						className={classes.form_submit}
 						onSubmit={(e) => formSubmit(e)}
 					/>
 				</div>

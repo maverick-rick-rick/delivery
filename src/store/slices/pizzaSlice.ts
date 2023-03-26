@@ -94,7 +94,7 @@ export const pizzaSlice = createSlice({
 		},
 		updateItem(state, action) {
 			state = state.splice(
-				findElementByID(state, action.payload),
+				findElementByID(state, action.payload.id),
 				1,
 				action.payload
 			);

@@ -2,6 +2,7 @@ import React from "react";
 import { useDispatch } from "react-redux";
 import { setFormStateToEdit } from "../../../store/slices/FormControlSlice";
 import { deleteItem } from "../../../store/slices/pizzaSlice";
+import { popupToggle } from "../../../store/slices/PopupSlice";
 import { IPizzaStateType } from "../../../store/types/pizzaTypes";
 import { keyGenerator } from "../../../utilities/keygen";
 import { Button } from "../../controls/Button";
@@ -19,7 +20,10 @@ export const TableRowForPizzaList = (props: TableRowProps) => {
 	const dispatch = useDispatch();
 
 	const deleteButtonCallback = () => dispatch(deleteItem(rowContent.id));
-	const editButtonCallback = () => dispatch(setFormStateToEdit(rowContent));
+	const editButtonCallback = () => {
+		dispatch(setFormStateToEdit(rowContent));
+		dispatch(popupToggle());
+	};
 	
 
 	const tableButtons = [
@@ -79,3 +83,5 @@ export const TableRowForPizzaList = (props: TableRowProps) => {
 		</div>
 	);
 };
+
+

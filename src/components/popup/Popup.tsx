@@ -1,39 +1,41 @@
-import React from 'react'
-import { useDispatch, useSelector } from 'react-redux';
-import { popupToggle } from '../../store/slices/PopupSlice';
-import { Button } from '../controls/Button';
-import classes from './../../style_modules/popup/Popup.module.css'
+import React from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { popupToggle } from "../../store/slices/PopupSlice";
+import { Button } from "../controls/Button";
+import classes from "./../../style_modules/popup/Popup.module.css";
 
 interface Props {
 	children?: React.ReactNode | string | undefined;
 }
 
 function Popup(props: Props) {
-    const {children} = props
+	const { children } = props;
 
-    const dispatch = useDispatch();
+	const dispatch = useDispatch();
 
-    const closePopup = () => {
-        dispatch(popupToggle());
-    }
-
-    const wrapperCallback = (e: React.MouseEvent<HTMLDivElement>) => {
-        const target = e.target as HTMLDivElement;
-		if (!target.classList.contains(`${classes.wrapper}`)) {
-            e.stopPropagation();
-            return false;
-        } else closePopup();
-        
+	const closePopup = () => {
+		dispatch(popupToggle());
 	};
 
-    const state = useSelector((state:any)=> state.popupState);
+	const wrapperCallback = (e: React.MouseEvent<HTMLDivElement>) => {
+		const target = e.target as HTMLDivElement;
+		if (!target.classList.contains(`${classes.wrapper}`)) {
+			e.stopPropagation();
 
-    return (
+			return false;
+		} else {
+			closePopup();
+		}
+	};
+
+	const state = useSelector((state: any) => state.popupState);
+
+	return (
 		<div
 			className={`${classes.wrapper} ${
 				state.condition !== true ? "hidden" : ""
 			}`}
-			onClick={wrapperCallback}
+			onMouseDown={wrapperCallback}
 		>
 			<div className={classes.popup}>
 				<div className={classes.content}>
@@ -51,4 +53,4 @@ function Popup(props: Props) {
 	);
 }
 
-export default Popup
+export default Popup;

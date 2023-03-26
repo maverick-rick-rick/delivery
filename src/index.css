@@ -1,10 +1,65 @@
+/* http://meyerweb.com/eric/tools/css/reset/ 
+   v2.0 | 20110126
+   License: none (public domain)
+*/
+
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed, 
+figure, figcaption, footer, header, hgroup, 
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+	margin: 0;
+	padding: 0;
+	border: 0;
+	font-size: 100%;
+	font: inherit;
+	vertical-align: baseline;
+}
+/* HTML5 display-role reset for older browsers */
+article, aside, details, figcaption, figure, 
+footer, header, hgroup, menu, nav, section {
+	display: block;
+}
+body {
+	line-height: 1;
+}
+ol, ul {
+	list-style: none;
+}
+blockquote, q {
+	quotes: none;
+}
+blockquote:before, blockquote:after,
+q:before, q:after {
+	content: '';
+	content: none;
+}
+table {
+	border-collapse: collapse;
+	border-spacing: 0;
+}
+
+/* ____________________ GENERAL PAGE STYLES ________________________ */
+
 body {
 	margin: 0;
 	font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-		'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-		sans-serif;
+	'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+	sans-serif;
 	-webkit-font-smoothing: antialiased;
 	-moz-osx-font-smoothing: grayscale;
+}
+
+.App {
+	position: relative;
 }
 
 code {
@@ -12,6 +67,9 @@ code {
 		monospace;
 }
 
+.hidden {
+	display: none !important;
+}
 
 .disabled {
 	pointer-events:none !important;
@@ -19,9 +77,6 @@ code {
 	position: relative;
 }
 
-.hidden {
-	display: none !important;
-}
 
 .disabled::after {
 	content: "";
@@ -35,47 +90,20 @@ code {
 	left: 0;
 }
 
-
-.App {
-	position: relative;
-}
-
-
-.form_wrapper{
-	display: flex;
-	flex-direction: column;
-	justify-content: center;
-	width: 50%;
-	margin: 0 auto;
-	border: 2px dashed darkgreen;
-	padding: 15px;
-	
-}
-
-.form_item {
-	display: flex;
-	flex-direction: column;
-	text-align: left;
-	margin-bottom: 10px;
-}
-
-.form_add_ingr {
-	display: flex;
-	gap: 15px;
+.add_button_temp {
+	text-transform: uppercase;
+	font-size: 22px;
+	background-color: transparent;
+	color: #00ca1b;
+	border: 1px solid #00ca1b;
+	padding: 15px 35px;
+	border-radius: 50px;
+	cursor: pointer;
+	transition: all 0.3s ease-out;
 
 }
 
-.form_ingr_list {
-	display: flex;
-	flex-direction: column;
-	border: 2px dotted slategray;
-	margin-left: 0;
-	padding: 10px;
-}
-
-.form_ingr_list_item {
-	display: flex;
-	flex-direction: row;
-	border: 1px solid slateblue;
-	justify-content: space-between;
+.add_button_temp:hover {
+	background-color: #00ca1b;
+	color: #fff;
 }

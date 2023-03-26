@@ -5,7 +5,7 @@ interface PopupSliceType  {
 }
 
 const popupState: PopupSliceType = {
-	condition: true
+	condition: false
 };
 
 

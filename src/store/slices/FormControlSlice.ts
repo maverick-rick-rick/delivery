@@ -1,8 +1,10 @@
-
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { keyGenerator } from "../../utilities/keygen";
-import { BufferIngredientType, IngredientType, IPizzaStateType } from "../types/pizzaTypes";
-
+import {
+	BufferIngredientType,
+	IngredientType,
+	IPizzaStateType,
+} from "../types/pizzaTypes";
 
 const emptyPizzaEntity: IPizzaStateType = {
 	id: keyGenerator(),
@@ -13,30 +15,30 @@ const emptyPizzaEntity: IPizzaStateType = {
 		{
 			value: "Pizza base",
 			allergic: false,
-		}
-	]
+		},
+	],
 };
 const emptyIngredient: IngredientType = {
 	value: "",
-	allergic: false
+	allergic: false,
 };
-
 
 const formState: IPizzaStateType = { ...emptyPizzaEntity };
 
 const bufferIngredient: BufferIngredientType = {
 	payload: { ...emptyIngredient },
-	index: null
+	index: null,
 };
 
 const formRole = {
-	role: "create"
+	role: "create",
 };
 
 const initialState = {
-	formState, bufferIngredient, formRole
+	formState,
+	bufferIngredient,
+	formRole,
 };
-
 
 export const FormControlSlice = createSlice({
 	name: "formControl",
@@ -55,11 +57,12 @@ export const FormControlSlice = createSlice({
 		},
 		setFormStateToEdit: (state, action) => {
 			state.formState = action.payload;
-			state.formRole = {role : "update"};
+			state.formRole = { role: "update" };
 		},
 		clearFormState: (state) => {
 			emptyPizzaEntity.id = keyGenerator();
 			state.formState = { ...state.formState, ...emptyPizzaEntity };
+			state.bufferIngredient = { ...bufferIngredient };
 			return state;
 		},
 		addNewIngredient: (state) => {
@@ -89,23 +92,23 @@ export const FormControlSlice = createSlice({
 		},
 		editIngredient: (state) => {
 			const index = state.bufferIngredient.index;
-			
+
 			if (index != null) {
-				state.formState.ingredients.splice(index, 1, state.bufferIngredient.payload);
+				state.formState.ingredients.splice(
+					index,
+					1,
+					state.bufferIngredient.payload
+				);
 				state.bufferIngredient.payload = {
 					...state.bufferIngredient.payload,
 					...emptyIngredient,
 				};
-			}
-			
-			else
-			
-			return state;
-			
+				state.bufferIngredient.index = null;
+				state.formRole.role = "create";
+			} else return;
 		},
 	},
 });
-
 
 export const {
 	updateFromInput,
@@ -118,4 +121,3 @@ export const {
 	setFormStateToEdit,
 } = FormControlSlice.actions;
 export default FormControlSlice.reducer;
-
