@@ -1,0 +1,72 @@
+.wrapper {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0,0,0, 0.3);
+    backdrop-filter: blur(1.5px);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    
+}
+
+.confirmation {
+    background-color: #fff;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    padding: 50px;
+    gap: 5px;
+   
+}
+
+h6 {
+    font-size: 22px;
+    font-weight: 300;
+    text-decoration: underline dashed 1px rgba(0, 0, 0, 0.25);
+    margin-bottom: 20px;
+    user-select: none;
+}
+
+.buttons {
+    display: flex;
+    gap: 15px;
+}
+
+.buttons > button {
+    cursor: pointer;
+    transition: all 0.3s ease-out;
+    user-select: none;
+    
+}
+
+.btn_confirm {
+    background-color: transparent;
+    border: 1px solid #00ca1b;
+    border-radius: 25px;
+    font-size: 18px;
+    color: #00ca1b;
+    padding: 5px 10px;
+    
+
+}
+
+.btn_confirm:hover {
+    background-color: #00ca1b;
+    color: #fff;
+}
+
+.btn_reject {
+    background-color: transparent;
+    border: none;
+    color:rgba(0,0,0, 0.3);
+    cursor: pointer;
+    font-size: 14px;
+}
+
+.btn_reject:hover {
+    color: rgba(0,0,0, 0.65);
+    text-decoration: underline 1px solid rgba(0, 0, 0, 0.25);
+}

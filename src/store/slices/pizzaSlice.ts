@@ -86,10 +86,10 @@ export const pizzaSlice = createSlice({
 		returnState(state) {
 			return state;
 		},
-		createNewItem(state, action){
-			return [...state, action.payload]
+		createNewItem(state, action) {
+			return [...state, action.payload];
 		},
-		deleteItem(state, action){
+		deleteItem(state, action) {
 			state = state.splice(findElementByID(state, action.payload), 1);
 		},
 		updateItem(state, action) {
@@ -98,9 +98,7 @@ export const pizzaSlice = createSlice({
 				1,
 				action.payload
 			);
-			
-			
-		}
+		},
 	},
 });
 

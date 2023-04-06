@@ -46,14 +46,12 @@ export const FormControlSlice = createSlice({
 	reducers: {
 		updateFromInput: (state, action) => {
 			state.formState = { ...state.formState, ...action.payload };
-			return state;
 		},
 		updateIngredientForm: (state, action) => {
 			state.bufferIngredient.payload = {
 				...state.bufferIngredient.payload,
 				...action.payload,
 			};
-			return state;
 		},
 		setFormStateToEdit: (state, action) => {
 			state.formState = action.payload;
@@ -63,7 +61,7 @@ export const FormControlSlice = createSlice({
 			emptyPizzaEntity.id = keyGenerator();
 			state.formState = { ...state.formState, ...emptyPizzaEntity };
 			state.bufferIngredient = { ...bufferIngredient };
-			return state;
+			state.formRole.role = "create";
 		},
 		addNewIngredient: (state) => {
 			state.formState.ingredients = [

@@ -1,15 +1,16 @@
-import { configureStore } from '@reduxjs/toolkit'
+import { configureStore } from "@reduxjs/toolkit";
 import FormCUSlice from './slices/FormControlSlice';
 import pizzaSlice from './slices/pizzaSlice';
-import PopupSlice from './slices/PopupSlice';
-
-
+import ConfirmationPopupSlice from './slices/popup/ConfirmationPopupSlice';
+import PopupsSlice from './slices/popup/PopupsSlice';
 
 
 export  const store = configureStore({
 	reducer: {
 		pizzaList: pizzaSlice,
 		formState: FormCUSlice,
-		popupState: PopupSlice,
+		popupsState: PopupsSlice,
+		confirmationState: ConfirmationPopupSlice,
 	},
 });
+

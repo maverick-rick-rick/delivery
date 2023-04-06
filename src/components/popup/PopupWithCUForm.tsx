@@ -11,14 +11,14 @@ interface Props {
 function PopupWithCUForm(props: Props) {
     const {} = props
 
-    const popupState = useSelector((state:any) => state.popupState.condition);
-    const dispatch = useDispatch();
+    // const popupState = useSelector((state:any) => state.popupsState.condition);
+    // const dispatch = useDispatch();
     
-    useEffect(() => {
-        if (!popupState) {
-            dispatch(clearFormState());
-		}
-    })
+    // useEffect(() => {
+    //     if (!popupState) {
+    //         dispatch(clearFormState());
+	// 	}
+    // })
 
     return (
         <Popup>

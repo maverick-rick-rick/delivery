@@ -2,11 +2,11 @@ import React from "react";
 import { useDispatch } from "react-redux";
 import { setFormStateToEdit } from "../../../store/slices/FormControlSlice";
 import { deleteItem } from "../../../store/slices/pizzaSlice";
-import { popupToggle } from "../../../store/slices/PopupSlice";
 import { IPizzaStateType } from "../../../store/types/pizzaTypes";
 import { keyGenerator } from "../../../utilities/keygen";
 import { Button } from "../../controls/Button";
 import { TableRowItem } from "../TableRowItem";
+import { useConfirmationHandler } from "../../../hooks/useConfirmationHandler";
 
 import classes from "./../../../style_modules/table/TableRow.module.css";
 
@@ -18,21 +18,26 @@ export const TableRowForPizzaList = (props: TableRowProps) => {
 	const { rowContent } = props;
 
 	const dispatch = useDispatch();
+	const deleteButtonHandler = useConfirmationHandler();
 
-	const deleteButtonCallback = () => dispatch(deleteItem(rowContent.id));
-	const editButtonCallback = () => {
-		dispatch(setFormStateToEdit(rowContent));
-		dispatch(popupToggle());
+	const deleteButtonCallback = () => {
+		dispatch(deleteItem(rowContent.id));
 	};
-	
+	const editButtonHandler = () => {
+		dispatch(setFormStateToEdit(rowContent));
+	};
 
 	const tableButtons = [
 		<Button key={keyGenerator()} icon={"pause"} />,
-		<Button key={keyGenerator()} icon={"edit"} onClick={editButtonCallback}/>,
+		<Button
+			key={keyGenerator()}
+			icon={"edit"}
+			onClick={editButtonHandler}
+		/>,
 		<Button
 			key={keyGenerator()}
 			icon={"delete"}
-			onClick={deleteButtonCallback}
+			onClick={() => deleteButtonHandler(deleteButtonCallback)}
 		/>,
 	];
 
@@ -46,7 +51,7 @@ export const TableRowForPizzaList = (props: TableRowProps) => {
 		);
 
 		const ending = (
-			<div className={classes.ending} key={rowContent.id + 'ending'}>
+			<div className={classes.ending} key={rowContent.id + "ending"}>
 				<span>···</span>
 			</div>
 		);
@@ -83,5 +88,3 @@ export const TableRowForPizzaList = (props: TableRowProps) => {
 		</div>
 	);
 };
-
-

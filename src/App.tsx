@@ -1,9 +1,10 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Button } from './components/controls/Button';
-import PopupWithCUForm from './components/popup/PopupWithCUForm';
+import PopupsController from './components/popup/PopupsController';
 import { Table } from './components/table/Table';
-import { popupToggle } from './store/slices/PopupSlice';
+import { POPUP_CU_FORM } from './constants/popupConstants';
+import { popupToggle } from './store/slices/popup/PopupsSlice';
 import { IPizzaStateType } from './store/types/pizzaTypes';
 
 function App() {
@@ -11,6 +12,9 @@ function App() {
 
   const dispatch = useDispatch();
 
+	const popupHandler = (str : string) => {
+		dispatch(popupToggle(str))
+	}
 
 
 
@@ -18,11 +22,11 @@ function App() {
 		<div className="container">
 			<Table tableContent={pizzaList} tableType={"pizzaList"} />
 			<Button
-				className={'btn_regular'}
+				className={"btn_regular"}
 				innerText={"Add item"}
-				onClick={() => dispatch(popupToggle())}
+				onClick={() => popupHandler(POPUP_CU_FORM)}
 			/>
-			<PopupWithCUForm />	
+			<PopupsController />
 		</div>
   );
 }
