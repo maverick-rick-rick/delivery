@@ -7,11 +7,13 @@ type TableRowItemProps = {
 	className?: string;
 }
 
-export const TableRowItem = (props: TableRowItemProps) => {
+export const TableRowCell = (props: TableRowItemProps) => {
 	const { children, className } = props;
 	return (
-		<div className={`${classes.cell} ${className? className : ''}`}>
-			<div className={classes.cell_content}>{children}</div>
+		<div className={`${classes.cell} ${className ? className : ""}`}>
+			<div className={classes.cell_content}>
+				{children}
+			</div>
 		</div>
 	);
 }

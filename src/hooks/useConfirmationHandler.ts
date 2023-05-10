@@ -8,7 +8,7 @@ import { useCallback } from "react";
 export const useConfirmationHandler = () => {
 	const dispatch = useDispatch();
 	const handler = useCallback(
-		async (callback: any) => {
+		async (callback: any, ...params: any) => {
 			dispatch(popupToggle(POPUP_CONFIRMATION));
 			await new Promise<void>((resolve) => {
 				const unsubscribe = store.subscribe(() => {
@@ -23,9 +23,9 @@ export const useConfirmationHandler = () => {
 			const confirmation =
 				store.getState().confirmationState.confirmation;
 
-			confirmation ? callback() : Promise.resolve(false);
+			confirmation ? callback(...params) : Promise.resolve(false);
 
-			dispatch(resetConfirmationState);
+			dispatch(resetConfirmationState());
 			dispatch(popupToggle(POPUP_CONFIRMATION));
 		},
 		[dispatch]

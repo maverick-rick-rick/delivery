@@ -1,17 +1,54 @@
 .table_row {
 	display: grid;
-    grid-template-columns: 1fr 5fr 1fr 1fr;
+    grid-template-columns: minmax(120px, 1fr) 700px minmax(120px, 1fr) minmax(120px, 1fr);
     align-items: center;
     background-color: #e4f6ff;
+    cursor: pointer;
+    transition: all 0.3s linear;
 }
 .table_row:nth-child(2n) {
     background-color: #d8ebf3;
 }
 
+.table_row.table_header {
+    background-color: #FFEDE4;
+    border-bottom: 1px solid #000;
+    font-weight: 600;
+    
+}
+
+.table_row.table_header > .cell {
+    padding: 10px;
+}
+
+.btn_create {
+    background-color: transparent;
+    border: 1px solid #00ca1b;
+    color: #00ca1b;
+    margin: 0 auto;
+    border-radius: 25px;
+    padding: 5px 15px;
+    font-weight: 600;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: all 0.3s ease-in-out;
+}
+
+.btn_create:hover {
+    background-color: #00ca1b;
+    color: #fff;
+}
+
+
+.table_buttons {
+    cursor: default;
+}
+
 .cell {
+    display: flex;
     position: relative;
     border-right: 1px solid #7e7e7e;
-    min-height: 95px;
+    padding: 5px 10px;
     height: 100%;
     box-sizing: border-box;
 }
@@ -23,14 +60,18 @@
 .cell_content{
     position: relative;
     display: flex;
-    justify-content: center;
+    justify-content: flex-start;
     align-items: center;
     width: 100%;
-    height: inherit;
+   
+}
+
+.cell_content p {
+    padding: 2px 0;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
-   
+    max-width: 100%;
 }
 
 .ingredients_list span {
@@ -38,81 +79,33 @@
     font-weight: 900;
 }
 
-.ingredients_list svg {
-    width: 20px;
-    height: 20px;
-    stroke: #585858;
-    position: absolute;
-    right: 10px;
-    bottom: 15px;
-}
 
 .ingredients_list > .cell_content {
     flex-direction: column;
     align-items: flex-start;
+    justify-content: start;
     box-sizing: border-box;
     padding: 15px 20px;
-    cursor: pointer;
-}
-.ingredients_list > .cell_content > div:nth-child(n + 3) {
-    display: none;
-}
-.ingredients_list > .cell_content > div.ending {
-    display: block;
+    overflow: hidden;
 }
 
 
-.ingredients_list:hover > .cell_content {
-    position: absolute;
-    background-color: #fff;
-    border: 1px solid #585858;
+.ingredients_list > .cell_content p {
+    text-overflow: none;
     overflow: visible;
-    height: auto;
-    z-index: 5;
-}
-.ingredients_list:hover > .cell_content > div{
-    display: block;
-}
-.ingredients_list:hover > .cell_content > .ending{
-    display: none;
-}
-.ingredients_list:hover > .cell_content > svg{
     display: none;
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-.table_buttons .cell_content {
-    gap: 5px;
+.ingredients_list > .cell_content:after {
+    content: 'Click on row to view the list...';
+    font-style: italic;
+    font-size: 14px;
 }
+
+.cell.jc_c .cell_content{
+    justify-content: center;
+}
+
 
 .table_buttons button{
     width: 35px;
@@ -138,4 +131,68 @@
 .table_buttons button:hover > svg{
     stroke: #00ca1b;
     transform: scale(1.15)
+}
+
+.table_row.expanded {
+    background-color: #E9FFE4;
+    border: 1px solid rgba(0,0,0, 0.5)
+}
+
+.table_row.expanded .cell .cell_content p {
+    padding: 2px 0;
+    white-space: normal;
+    overflow: visible;
+    text-overflow: clip;
+    overflow-wrap: break-word;
+    max-width: 100%;
+}
+
+.table_row.expanded .ingredients_list > .cell_content:after {
+    display: none;
+}
+.table_row.expanded .ingredients_list > .cell_content p {
+    display: block;
+}
+
+.table_row.expanded .table_buttons {
+    align-items: flex-start;
+}
+
+.table_row.expanded .table_buttons > .cell_content {
+    align-items: flex-start;
+    padding-top: 10px;
+    box-sizing: border-box;
+} 
+
+.table_buttons > .cell_content {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    height: 100%;
+    
+}
+
+.table_buttons .roll_up {
+    display: none;
+    border: none;
+    width: 100%;
+    justify-content: center;
+    color: rgba(0,0,0, 0.55);
+}
+.table_buttons .roll_up:hover {
+    color:#00ca1b;
+}
+
+.table_buttons .roll_up > svg {
+    width: 15px;
+    margin-right: 5px;
+    stroke: rgba(0,0,0,0.55);
+}
+
+.table_row.expanded .table_buttons > .cell_content .roll_up {
+    display: flex;
+    align-self: flex-end;
+    grid-column-start: 1;
+    grid-column-end: 4;
+
+    
 }

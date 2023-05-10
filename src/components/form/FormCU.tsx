@@ -1,4 +1,4 @@
-import React, { FormEvent, useState } from "react";
+import React, { FormEvent, useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
 	addNewIngredient,
@@ -7,15 +7,17 @@ import {
 	removeIngredient,
 	updateFromInput,
 	updateIngredientForm,
-	editIngredient,
+	rewriteIngredient,
+	setFormChanged,
 } from "../../store/slices/FormControlSlice";
 import { createNewItem, updateItem } from "../../store/slices/pizzaSlice";
-import { popupToggle } from "../../store/slices/popup/PopupsSlice";
 import { IPizzaStateType } from "../../store/types/pizzaTypes";
 import { keyGenerator } from "../../utilities/keygen";
-import { Button } from "../controls/Button";
-import SVGIcon from "../controls/SVGIcon";
+import { Button } from "../elements/Button";
+import SVGIcon from "../elements/SVGIcon";
 import classes from "./../../style_modules/forms/FormCU.module.css";
+import { POPUP_CU_FORM } from "../../constants/popupConstants";
+import { popupToggle } from "../../store/slices/popup/PopupsSlice";
 
 export const FormCU = () => {
 	const formState: any = useSelector((state: any) => state.formState);
@@ -24,11 +26,16 @@ export const FormCU = () => {
 	const dispatch = useDispatch();
 
 	const [saveButtonRole, setSaveButtonRole] = useState("default");
-	const disabledElement = useSelector((state:any) => state.formState.bufferIngredient.index);
-	
+
+	const ingredientInputRef = useRef<HTMLInputElement>(null);
+
+	const disabledElement = useSelector(
+		(state: any) => state.formState.bufferIngredient.index
+	);
+
 	function formSubmit(e: FormEvent<HTMLFormElement | HTMLInputElement>) {
 		e.preventDefault();
-		switch (formState.formRole.role) {
+		switch (formState.formProperties.role) {
 			case "update":
 				dispatch(updateItem(state));
 				break;
@@ -37,6 +44,7 @@ export const FormCU = () => {
 				dispatch(createNewItem(state));
 		}
 		dispatch(clearFormState());
+		dispatch(popupToggle(POPUP_CU_FORM));
 	}
 
 	function pushIngredient(
@@ -45,18 +53,26 @@ export const FormCU = () => {
 		e.preventDefault();
 		e.stopPropagation();
 
-		(() => {
-			switch (saveButtonRole) {
-				case "edit":
-					setSaveButtonRole("default");
-					dispatch(editIngredient());
-					break;
-				case "default":
-				default:
-					dispatch(addNewIngredient());
-					break;
-			}
-		})();
+		if (formState.bufferIngredient.payload.value === "") {
+			ingredientInputRef.current !== null ? (
+				ingredientInputRef.current.focus()
+			) : (
+				<></>
+			);
+			return false;
+		} else
+			(() => {
+				switch (saveButtonRole) {
+					case "edit":
+						setSaveButtonRole("default");
+						dispatch(rewriteIngredient());
+						break;
+					case "default":
+					default:
+						dispatch(addNewIngredient());
+						break;
+				}
+			})();
 	}
 	function removeCurrentIngredient(
 		e: React.MouseEvent<HTMLButtonElement, MouseEvent>,
@@ -88,6 +104,7 @@ export const FormCU = () => {
 						name=""
 						id="form_cu_title"
 						value={state.title}
+						required
 						onChange={(e) =>
 							dispatch(updateFromInput({ title: e.target.value }))
 						}
@@ -101,6 +118,7 @@ export const FormCU = () => {
 						cols={30}
 						rows={10}
 						value={state.description}
+						required
 						onChange={(e) =>
 							dispatch(
 								updateFromInput({ description: e.target.value })
@@ -132,6 +150,7 @@ export const FormCU = () => {
 								type="text"
 								name=""
 								id="form_cu_new_ingr"
+								ref={ingredientInputRef}
 								value={formState.bufferIngredient.payload.value}
 								onChange={(e) =>
 									dispatch(
@@ -178,7 +197,6 @@ export const FormCU = () => {
 							</p>
 						) : (
 							state.ingredients.map((element, index) => {
-
 								return element.value.length === 0 ? (
 									false
 								) : (
@@ -186,7 +204,8 @@ export const FormCU = () => {
 										className={`${
 											classes.ingredient_list_item
 										} ${
-											disabledElement !== null && disabledElement === index
+											disabledElement !== null &&
+											disabledElement === index
 												? "disabled"
 												: ""
 										}`}
@@ -207,12 +226,18 @@ export const FormCU = () => {
 										>
 											<Button
 												icon={"pencil"}
-												onClick={(e) =>
+												onClick={(e) => {
 													editCurrentIngredient(
 														e,
 														index
-													)
-												}
+													);
+													ingredientInputRef.current !==
+													null ? (
+														ingredientInputRef.current.focus()
+													) : (
+														<></>
+													);
+												}}
 											/>
 											<Button
 												icon={"delete"}

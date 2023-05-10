@@ -1,7 +1,7 @@
 import React from 'react'
 import { useDispatch } from 'react-redux';
-import { setConfirmationState } from '../../store/slices/popup/ConfirmationPopupSlice';
-import { Button } from '../controls/Button';
+import { resetConfirmationState, setConfirmationState } from '../../store/slices/popup/ConfirmationPopupSlice';
+import { Button } from '../elements/Button';
 import classes from './../../style_modules/popup/ConfirmationPopup.module.css'
 
 
